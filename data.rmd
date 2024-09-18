@@ -1,0 +1,760 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+  word_document: default
+---
+<h1 style="text-align: center;color:#19a3e7">Comprehensive Analysis of Hotel Booking Trends</h1>
+
+---
+
+<h2 style='color: #19a3e7'> Introduction </h2>
+
+In today's fast-paced travel industry, hotel bookings are influenced by numerous factors such as seasonality, customer preferences, and global events. For instance, imagine a small but popular hotel chain, Sunset Getaways, located in Europe. This hotel saw a sharp increase in bookings in the summer months, primarily driven by vacationers seeking coastal escapes. However, challenges arose as the hotel faced a series of cancellations during the off-peak seasons due to unforeseen events like travel restrictions or changing weather patterns.
+
+To better understand these fluctuations and improve business strategies, Sunset Getaways decided to analyze its hotel booking data. By exploring booking patterns, customer preferences, and seasonal trends, the hotel aimed to optimize its marketing campaigns, improve room allocation, and ensure higher customer satisfaction.
+
+This report delves into the hotel booking dataset, analyzing the trends and insights that can help hoteliers like Sunset Getaways make informed decisions, address operational challenges, and anticipate customer needs.
+
+<h2 style='color: #19a3e7'> Dataset Overview </h2>
+
+This dataset contains 119390 observations for a City Hotel and a Resort Hotel. Each observation represents a hotel booking between the 1st of July 2015 and 31st of August 2017, including booking that effectively arrived and booking that were canceled.
+
+- **Dataset Name**: Hotel Booking
+- **Source**: For more detailed information, check out <a href="https://www.kaggle.com/datasets/mojtaba142/hotel-booking/data" style="color: #19a3e7; text-decoration: none;">hotel booking</a>.
+
+- **Time Period**: 2015 to 2017
+- **Number of Records**: 119390
+- **Number of Variables**: 32
+
+<h2 style='color: #19a3e7'>Summery about data</h2>
+
+1- hotel: Type of hotel (e.g., Resort Hotel, City Hotel).
+
+2- is_canceled: A binary field indicating whether a booking was canceled (1 = Canceled, 0 = Not Canceled).
+
+3- lead_time: Number of days between the booking date and the arrival date.
+
+4- arrival_date_year: Year of arrival.
+
+5- arrival_date_month: Month of arrival.
+
+6- arrival_date_week_number: The week number of the arrival date.
+
+7- arrival_date_day_of_month: The day of the month of the arrival date.
+
+8- stays_in_weekend_nights: Number of weekend nights (Friday, Saturday) stayed by guests.
+
+9- stays_in_week_nights: Number of weeknights (Monday to Thursday) stayed by guests.
+
+10- adults: Number of adults in the booking.
+
+11- children: Number of children in the booking.
+
+12- babies: Number of babies in the booking.
+
+13- meal: Type of meal booked (e.g., BB = Bed & Breakfast, HB = Half Board).
+
+14- country: Country of origin of the guest.
+
+15- market_segment: Market segment designation (e.g., Direct, Corporate, Online TA).
+
+16- distribution_channel: Booking distribution channel (e.g., Direct, TA/TO).
+
+17- is_repeated_guest: A binary field indicating whether the guest is a repeat guest (1 = Yes, 0 = No).
+
+18- previous_cancellations: Number of previous cancellations by the guest.
+
+19- previous_bookings_not_canceled: Number of previous bookings that were not canceled by the guest.
+
+20- reserved_room_type: Type of room reserved.
+
+21- assigned_room_type: Type of room assigned to the guest upon arrival.
+
+22- booking_changes: Number of changes made to the booking.
+
+23- deposit_type: Type of deposit made (e.g., No Deposit, Refundable, Non Refundable).
+
+24- agent: ID of the booking agent.
+
+25- company: ID of the company that made the booking.
+
+26- days_in_waiting_list: Number of days the booking was on a waiting list before being confirmed.
+
+27- customer_type: Type of customer (e.g., Transient, Contract, Group).
+
+28- adr: Average Daily Rate (ADR), a measure of the revenue earned per occupied room.
+
+29- required_car_parking_spaces: Number of car parking spaces required.
+
+30- total_of_special_requests: Number of special requests made by the guest (e.g., high floor, late check-in).
+
+31- reservation_status: The status of the reservation (e.g., Canceled, Check-Out).
+
+32- reservation_status_date: Date of the last status change (e.g., when it was canceled or checked out).
+
+<h2 style='color: #19a3e7'> Methodology </h2>
+
+The analysis was conducted on a hotel booking dataset to explore key trends, patterns, and insights regarding customer behavior, pricing strategies, and operational performance. The following steps outline the methodology used for this analysis:
+
+1. **Data Cleaning and Preparation**  
+   The dataset was first cleaned to remove any inconsistencies or missing values. Null values in important columns were handled using appropriate strategies such as imputation or removal based on the significance of the missing data. For instance, columns like `reservation_status`, `adr` (Average Daily Rate), and `arrival_date` were critical for analysis, and thus missing values were either replaced or carefully handled.  
+  
+   The `arrival_date_month` and `arrival_date_year` were converted into appropriate factor levels to ensure proper sorting and analysis for time-based trends.
+
+2. **Exploratory Data Analysis (EDA)**  
+   Initial exploratory analysis was performed to understand the overall structure of the data and The EDA focused on:
+
+   - **Monthly and Yearly Trends**: The distribution of bookings across different months and years was analyzed using bar charts and line graphs to identify peak booking periods and seasonal variations.
+  
+   - **Customer Type and ADR Analysis**: A detailed analysis of the `customer_type` and its relationship with the `adr` (Average Daily Rate) was performed to understand how different customer segments contributed to revenue.
+
+   - **Country-wise ADR Analysis**: Countries were ranked based on their ADR values, and the top 10 countries were visualized using a treemap to highlight the countries generating the highest revenue.
+  
+   - **Reservation Status and Cancellations**: Reservation statuses were explored across different months and hotel types to examine patterns in confirmed, canceled, and no-show bookings. Additionally, the cancellation rate was calculated for different market segments to identify trends.
+
+3. **Visualization Techniques**  
+   Multiple types of visualizations were used to communicate insights effectively:
+  
+   - **Bar Charts**: Used to visualize monthly booking trends, reservation statuses by hotel type, and cancellation rates by market segment. Labels were added for better interpretability.
+
+   - **Line Graphs with Smoothing**: Line graphs with a smoothing function (using `geom_smooth()`) were used to show the ADR trend over time, providing a clear indication of fluctuations and trends in pricing.
+
+   - **Treemap**: To visualize the top 10 countries by ADR, a treemap was chosen to illustrate the relative contribution of each country to the total revenue.
+  
+   - **Pie Charts**: Pie charts were used to represent the proportion of reservation statuses, giving a clear breakdown of confirmed, canceled, and no-show reservations.
+
+4. **Statistical Analysis**  
+   Key statistical measures such as the mean, median, and standard deviation of ADR were calculated for various customer segments and countries. These measures provided insight into the distribution of revenue across different segments and helped identify outliers or significant trends.
+
+5. **Segmentation and Grouping**
+   - **Customer Type**: Grouping customers based on type (e.g., transient, group, contract) to examine differences in behavior and revenue contribution.
+  
+   - **Market Segment**: Analyzing how bookings from different market segments (e.g., corporate, direct, online travel agencies) performed in terms of cancellations and ADR.
+  
+   - **Reservation Status**: Grouping reservations by status (confirmed, canceled, no-show) to understand operational challenges.
+
+6. **Interpretation of Visualizations**
+   - Seasonal peaks in bookings and how these impact revenue.
+
+   - The performance of different market segments in terms of cancellations and revenue.
+
+   - How customer type and country of origin influence the ADR.
+
+   - How cancellation trends vary across market segments and months.
+
+7. **Software and Tools Used**
+   The analysis was performed using R and the following libraries:
+
+   - **ggplot2**: For creating visualizations including bar charts, line graphs, and pie charts.
+
+   - **dplyr**: For data manipulation and summarization.
+
+   - **treemap**: To create a treemap for country-wise ADR analysis.
+  
+   - **scales**: For formatting percentages and currency values in the charts.
+
+<h2 style='color: #19a3e7'> Key Objectives</h2>
+
+- **Analyze Booking Trends**
+Explore how hotel bookings vary over time, focusing on monthly and yearly trends. Identify peak booking periods to inform marketing and resource allocation strategies.
+
+- **Examine Cancellation Rates**
+Investigate the cancellation rates among different customer segments (e.g., market segment, lead time). Analyze factors contributing to higher cancellation rates and recommend ways to mitigate them.
+
+- **Understand Customer Demographics and Preferences**
+Segment customers by demographic factors (e.g., country, customer type) to identify key markets and tailor offerings. Also, analyze whether customers receive their preferred room type and how this impacts satisfaction.
+
+- **Assess Revenue and Pricing Strategies**
+Analyze the average daily rate (ADR) across customer types, countries, and market segments to identify which segments are most profitable. Suggest strategies for optimizing pricing to maximize revenue.
+
+- **Assess Revenue and Pricing Strategies (ADR)**:
+Analyze the average daily rate (ADR) across customer types, countries, and market segments to identify which segments are most profitable. Suggest strategies for optimizing pricing to maximize revenue.
+
+- **Evaluate Special Requests and Resource Utilization**:
+Investigate the distribution of special requests (e.g., parking spaces, additional services) to understand the impact on hotel resources and operational planning.
+
+- **Identify Reservation Status Patterns**:
+Examine how reservation statuses (confirmed, canceled, no-show) differ by month and hotel type to inform hotel management strategies for improving occupancy rates and reducing no-shows.
+
+<h2 style='color: #19a3e7'> Code: Loading Data </h2>
+
+```r
+########################
+####  Loading Data  ####
+########################
+install.packages("openxlsx")
+install.packages("readr")
+install.packages('treemap')
+
+library(dplyr)
+library(tidyr)
+library(readr)
+library(ggplot2)
+library(openxlsx)
+library(treemap)
+
+df <- read_csv("c:\\Users\\Ahmed\\Downloads\\hotel_bookings.csv")
+View(df)
+```
+
+<video width="900" height="315" controls autoplay>
+  <source src="RStudio2.mp4" type="video/mp4">
+</video>
+
+<h2 style='color: #19a3e7'> Code: Data Cleaning </h2>
+
+```r
+#########################
+####  Data Cleaning  ####
+#########################
+df %>%
+  mutate(
+    hotel = as.character(hotel),
+    is_canceled = as.character(is_canceled),
+    lead_time = as.numeric(lead_time),
+    arrival_date_year = as.numeric(arrival_date_year),
+    arrival_date_month = as.character(arrival_date_month),
+    arrival_date_week_number = as.numeric(arrival_date_week_number),
+    arrival_date_day_of_month = as.numeric(arrival_date_day_of_month),
+    stays_in_weekend_nights = as.numeric(stays_in_weekend_nights),
+    stays_in_week_nights = as.numeric(stays_in_week_nights),
+    adults = as.numeric(adults),
+    children = as.numeric(children),
+    babies = as.numeric(babies),
+    meal = as.character(meal),
+    country = as.character(country),
+    market_segment = as.character(market_segment),
+    distribution_channel = as.character(distribution_channel),
+    is_repeated_guest = as.character(is_repeated_guest),
+    previous_cancellations = as.numeric(previous_cancellations),
+    previous_bookings_not_canceled = as.numeric(previous_bookings_not_canceled),
+    reserved_room_type = as.character(reserved_room_type),
+    assigned_room_type = as.character(assigned_room_type),
+    booking_changes = as.numeric(booking_changes),
+    deposit_type = as.character(deposit_type),  
+    agent = as.character(agent), 
+    company = as.character(company),
+    days_in_waiting_list = as.numeric(days_in_waiting_list),
+    customer_type = as.character(customer_type),
+    adr = as.numeric(adr),
+    required_car_parking_spaces = as.numeric(required_car_parking_spaces),
+    total_of_special_requests = as.numeric(total_of_special_requests),
+    reservation_status = as.character(reservation_status),
+  )
+
+df %>% mutate(across(where(is.numeric), ~replace_na(., 0)))
+
+df <- df %>% mutate(agent = ifelse(agent == "NULL", "Not Found", agent))
+
+df <- df %>% mutate(company = ifelse(company == "NULL", "Not Found", company))
+
+df %>% distinct(.keep_all=TRUE)
+
+View(df)
+
+```
+
+<video width="900" height="315" controls autoplay>
+  <source src="RStudio1.mp4" type="video/mp4">
+</video>
+
+<h2 style='color: #19a3e7'> Code: Data Manipulation </h2>
+
+```r
+#############################
+####  Data Manipulation  ####
+#############################
+
+head(df, 10)
+##############################
+```
+
+![Alt text](im3.jpg)
+
+```r
+str(df)
+##############################
+```
+
+![Alt text](im4.jpg)
+
+```r
+dim(df)
+##############################
+
+names(df)
+##############################
+
+summary(df)
+##############################
+```
+
+![Alt text](im2.jpg)
+
+```r
+dataFilteredByCountry <- filter(df, df['country']=='USA')
+View(dataFilteredByCountry)
+##############################
+
+dataFilteredByArrivalDateMonth <- filter(df, df['arrival_date_month']=='July')
+View(dataFilteredByArrivalDateMonth)
+##############################
+
+dataFilteredByReservationStatus <- filter(df, df['reservation_status'] == 'Check-Out')
+View(dataFilteredByReservationStatus)
+##############################
+
+write.xlsx(df, file = "c:\\Users\\Ahmed\\Downloads\\my_data.xlsx")
+```
+
+<video width="900" height="315" controls autoplay>
+  <source src="RStudio3.mp4" type="video/mp4">
+</video>
+
+<h2 style='color: #19a3e7'> Data Visualization </h2>
+
+#### 1. Monthly Booking Trends by Years
+
+Insight: While the general seasonal trend persists across years, the overall volume of bookings has varied slightly from year to year. Some years might have experienced higher demand during peak months compared to others. This could be due to external factors such as economic conditions, special events, or promotions affecting customer behavior.
+
+![Alt text](img2.png)
+
+### Chart 1 Code
+
+```r
+## = Monthly Booking Trends by Years = ##
+df$arrival_date_year <- as.factor(df$arrival_date_year)
+
+ggplot(df, aes(x = arrival_date_month, group = arrival_date_year, color = arrival_date_year, linetype = arrival_date_year)) +
+  geom_line(stat = 'count', size = 1.2) +
+  geom_point(stat = 'count', size = 3) +
+  theme_minimal() +
+  labs(title = "Monthly Booking Trends by Years", 
+       x = "Month", 
+       y = "Number of Bookings", 
+       color = "Year", 
+       linetype = "Year") +
+  theme(plot.title = element_text(hjust = 0.5, size = 14, face = "bold"),
+        axis.text.x = element_text(angle = 45, hjust = 1)) +
+  scale_color_brewer(palette = "Set1") +
+  scale_linetype_manual(values = c("solid", "dashed", "dotted"))
+```
+
+#### 2. Monthly Booking Trends Over the Years
+
+Insight: Bookings show a seasonal trend, with peaks in certain months like July and August. This suggests that these are the busiest months for hotel bookings, possibly coinciding with holidays or vacation seasons. On the other hand, months like January and November tend to have fewer bookings, indicating low-demand periods.
+
+![Alt text](img1.png)
+
+### Chart 2 Code
+
+```r
+## = Monthly Booking Trends Over the years = ##
+df$arrival_date_month <- factor(df$arrival_date_month, levels = c("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"))
+
+ggplot(df, aes(x = arrival_date_month)) +
+  geom_bar(fill = '#0077b6', color='black') +
+  geom_text(stat = 'count', aes(label = ..count..), vjust = -0.3, size = 3) +
+  theme_minimal() +
+  labs(title = "Monthly Booking Trends Over the years", x = "Month", y = "Number of Bookings") +
+  theme(plot.title = element_text(hjust = 0.5, size = 14, face = "bold"),
+        axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+#### 3. Average Daily Rate (ADR) by Customer Type
+
+Insight: The average daily rate (ADR) differs across customer types. For example, transient customers may have a higher ADR compared to group bookings. This suggests that individual customers are willing to pay more per day compared to groups, who might benefit from group discounts or promotions.
+
+![Alt text](img3.png)
+
+### Chart 3 Code
+
+```r
+## = Average Daily Rate By Customer Type = ##
+adr_by_customer <- df %>%
+  group_by(customer_type) %>%
+  summarize(avg_adr = mean(adr, na.rm = TRUE))
+
+ggplot(adr_by_customer, aes(x = customer_type, y = avg_adr)) +
+  geom_bar(stat = "identity", fill = "#0077b6", color = "black") +
+  geom_text(aes(label = round(avg_adr, 2)), hjust = -0.1, size = 3) + 
+  labs(title = "Average Daily Rate by Customer Type", x = "Customer Type", y = "Average ADR") +
+  theme_minimal() +
+  coord_flip() + 
+  theme(plot.title = element_text(hjust = 0.5, size = 14, face = "bold"))
+```
+
+### 4. Top Ten Countries by ADR
+
+Insight: The chart shows the countries with the highest ADR. The countries at the top could indicate regions with wealthier travelers or those who typically opt for higher-end accommodation. Understanding the source of high-paying customers can help in targeting marketing efforts.
+
+![Alt text](img4.png)
+
+### Chart 4 Code
+
+```r
+## = The Top Ten Of Countries By ADR = ##
+adr_by_country <- df %>%
+  group_by(country) %>%
+  summarize(avg_adr = mean(adr, na.rm = TRUE)) %>%
+  arrange(desc(avg_adr)) %>%
+  slice(1:10)
+
+treemap(adr_by_country,
+        index = "country",
+        vSize = "avg_adr",
+        vColor = "avg_adr",
+        type = "value",
+        palette = "Blues",
+        title = "The Top Ten Of Countries By adr",
+        fontsize.labels = 12,
+        fontsize.title = 14,
+        fontcolor.labels = "white",
+        border.col = "white",
+        title.legend = "Average ADR",
+        draw.labels = TRUE,
+#        label.format = list(size = 12, format = function(x) sprintf("%.2f", x))
+)
+```
+
+#### 5. ADR Trend Over Months
+
+Insight: The Average Daily Rate (ADR) shows a clear seasonal trend, peaking during the summer months (June to August), while rates tend to dip during the winter months. The smooth line (LOESS curve) highlights that the ADR consistently follows a predictable seasonal cycle, which could help in pricing strategies for future bookings.
+
+![Alt text](img5.png)
+
+### Chart 5 Code
+
+```r
+## = ADR Trend Over Months = ##
+adr_by_month <- df %>%
+  group_by(arrival_date_month) %>%
+  summarize(avg_adr = mean(adr, na.rm = TRUE))
+df$arrival_date_month <- factor(df$arrival_date_month, levels = month.name)
+
+ggplot(adr_by_month, aes(x = arrival_date_month, y = avg_adr, group = 1)) +
+  geom_line(color = "#0077b6", size = 1) +
+  geom_smooth(method = "loess", se = FALSE, color = "red", size = 1) +
+  labs(title = "ADR Trend Over Months", x = "Month", y = "Average Daily Rate (ADR)") +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5, face = "bold", size = 14),
+        axis.text.x = element_text(angle = 45, hjust = 1)) +
+  scale_x_discrete(limits = month.name)
+```
+
+#### 6. Reservation Status by Month
+
+Insight: The distribution of reservation statuses (e.g., confirmed, canceled) varies by month. There may be a higher number of confirmed reservations during peak months, while cancellation rates could rise during off-season months when customers may reconsider or cancel their travel plans.
+
+![Alt text](img6.png)
+
+### Chart 6 Code
+
+```r
+## = Reservation status per month = ##
+reservation_status_count <- df %>%
+  group_by(reservation_status) %>%
+  summarize(count = n())
+
+df_filtered <- df %>% 
+  filter(reservation_status %in% c("Check-Out", "Canceled"))
+
+ggplot(df_filtered, aes(x = arrival_date_month, fill = reservation_status)) +
+  geom_bar(position = "dodge", color = "black") +
+  geom_text(stat = "count", aes(label = ..count..), 
+            position = position_dodge(width = 0.9), vjust = -0.3, size = 3) +
+  labs(title = "Reservation Status by Month", 
+       x = "Month", 
+       y = "Count", 
+       fill = "Reservation Status") +
+  theme_minimal() +
+ theme(plot.title = element_text(hjust = 0.5, face = "bold", size = 14),
+        axis.text.x = element_text(angle = 45, hjust = 1)) +
+  scale_x_discrete(limits = month.name) +
+  scale_fill_manual(values = c("Check-Out" = "#19a3e7", "Canceled" = "#db2763"))
+```
+
+#### 7. Reservation Statuses
+
+Insight: The pie chart reveals the proportion of each reservation status, indicating whether most reservations are confirmed, canceled, or otherwise modified. If a large proportion of bookings are canceled, this could signal the need to review the cancellation policies or customer communication strategies.
+
+![Alt text](img7.png)
+
+### Chart 7 Code
+
+```r
+## = Proportion of Reservation Statuses = ##
+reservation_status_count <- df %>%
+  group_by(reservation_status) %>%
+  filter(reservation_status %in% c("Check-Out", "Canceled")) %>%
+  summarize(count = n())
+
+ggplot(reservation_status_count, aes(x = "", y = count, fill = reservation_status)) +
+  geom_bar(stat = "identity", width = 1) +
+  coord_polar(theta = "y") +
+  labs(title = "Proportion of Reservation Statuses", fill = "Reservation Status") +
+  theme_void() +
+  theme(plot.title = element_text(hjust = 0.5, face = "bold", size = 14)) +
+  geom_text(aes(label = scales::percent(count/sum(count))), position = position_stack(vjust = 0.5), size = 5) +
+  scale_fill_manual(values = c("Check-Out" = "#19a3e7", "Canceled" = "#db2763"))
+```
+
+#### 8. Reservation Status by Hotel Type
+
+Insight: The reservation status differs between hotel types. For example, city hotels may have higher cancellations compared to resort hotels, which could suggest that city bookings are more short-term or subject to last-minute changes, while resort bookings may be planned well in advance and are more stable.
+
+![Alt text](img8.png)
+
+### Chart 8 Code
+
+```r
+## = Reservation Status By Hotel Type = ##
+reservation_status_count <- df %>%
+  group_by(reservation_status) %>%
+  summarize(count = n())
+
+df_filtered <- df %>% 
+  filter(reservation_status %in% c("Check-Out", "Canceled"))
+
+ggplot(df_filtered, aes(x = hotel, fill = reservation_status)) +
+  geom_bar(position = "dodge", color = "black") +
+  geom_text(stat = 'count', aes(label = ..count..), 
+            position = position_dodge(width = 0.9), vjust = -0.3, size = 3) +
+  labs(title = "Reservation Status by Hotel Type", 
+       x = "Hotel", 
+       y = "Count", 
+       fill = "Reservation Status") +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5, face = "bold", size = 14)) +
+  scale_fill_manual(values = c("Check-Out" = "#19a3e7", "Canceled" = "#db2763"))
+```
+
+#### 9. Special Requests by Reservation Status
+
+Insight: This chart shows the total number of special requests associated with "Check-Out" and "Canceled" reservations. If "Canceled" reservations have significantly more special requests, it may indicate that guests with more specific needs are more likely to cancel their reservations.
+
+![Alt text](img9.png)
+
+### Chart 9 Code
+
+```r
+## = Special Requests by Reservation Status = ##
+df_filtered <- df %>% 
+  filter(reservation_status %in% c("Check-Out", "Canceled"))
+
+ggplot(df_filtered, aes(x = reservation_status, y = total_of_special_requests, fill = reservation_status)) +
+  geom_bar(stat = "summary", fun = "sum") +
+  geom_text(stat = "summary", fun = "sum", aes(label = ..y..), vjust = -0.5, size = 3) +
+  labs(title = "Total Special Requests by Reservation Status", x = "Reservation Status", y = "Total Special Requests") +
+  theme_minimal() +
+  scale_fill_manual(values = c("#ff5a5f", "#0077b6"), labels = c("Not Canceled", "Canceled")) +
+  theme(plot.title = element_text(hjust = 0.5, size = 14, face = "bold"))
+```
+
+#### 10. Reservation Status by Meal Type
+
+Insight: This chart compares the number of reservations with different meal plans ("BB" for Bed and Breakfast, "FB" for Full Board, "HB" for Half Board, and "SC" for Self-Catering) between "Check-Out" and "Canceled" statuses. If a particular meal type is more common among canceled reservations, it could suggest a link between meal preferences and reservation stability.
+
+![Alt text](img10.png)
+
+### Chart 10 Code
+
+```r
+
+## = Reservation Status by Meal Type = ##
+df_filtered <- df %>% 
+  filter(reservation_status %in% c("Check-Out", "Canceled")) %>%
+  filter(meal %in% c("BB", "FB", "HB", "SC"))
+
+ggplot(df_filtered, aes(x = reservation_status, fill = meal)) +
+  geom_bar(position = "dodge") +
+  labs(title = "Reservation Status by Meal Type", x = "Reservation Status", y = "Count", fill = "Meal Type") +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5, size = 14, face = "bold")) +
+  geom_text(stat = "count", aes(label = ..count..), position = position_dodge(width = 0.9), vjust = -0.5)
+```
+
+#### 11. Weekend vs Weekday Stay Preferences by Customer Type
+
+Insight: This chart illustrates the average number of weekend versus weekday nights stayed by different customer types. If certain customer types prefer weekend stays significantly more than weekday stays (or vice versa), it could inform targeted marketing strategies or pricing adjustments.
+
+![Alt text](img11.png)
+
+### Chart 11 Code
+
+```r
+## = Weekend vs Weekday Stay Preferences by Customer Type = ##
+df_long <- df %>%
+  pivot_longer(cols = c(stays_in_weekend_nights, stays_in_week_nights), names_to = "Stay_Type", values_to = "Nights")
+
+ggplot(df_long, aes(x = customer_type, y = Nights, fill = Stay_Type)) +
+  geom_bar(stat = "summary", fun = "mean", position = "dodge") +
+  geom_text(stat = "summary", fun = "mean", aes(label = round(..y.., 2)), position = position_dodge(width = 0.9), vjust = -0.5, size = 3) +
+  labs(title = "Weekend vs Weekday Stay Preferences by Customer Type", x = "Customer Type", y = "Average Nights Stayed") +
+  theme_minimal() + 
+  theme(plot.title = element_text(hjust = 0.5, size = 14, face = "bold"))
+```
+
+#### 12. Distribution of Special Requests by Hotel Type
+
+Insight: This chart shows the average number of special requests per hotel type. A higher average in one hotel type suggests that guests at that hotel tend to make more special requests. This can help in understanding the service expectations or preferences at different hotels.
+
+![Alt text](img12.png)
+
+### Chart 12 Code
+
+```r
+## = Distribution of Special Requests by Hotel Type = ##
+
+ggplot(df, aes(x = hotel, y = total_of_special_requests, fill = hotel)) +
+  geom_bar(stat = "summary", fun = "mean", position = "dodge") +
+  geom_text(stat = "summary", fun = "mean", aes(label = round(..y.., 2)), vjust = -0.5, size = 3) +
+  labs(title = "Average Special Requests by Hotel Type", x = "Hotel Type", y = "Average Total Special Requests") +
+  theme_minimal() +
+  scale_fill_manual(values = c("#0077b6", "#ff5a5f")) +
+  theme(plot.title = element_text(hjust = 0.5, size = 14, face = "bold"))
+```
+
+#### 13. The Count of Parking Spaces Requested by Hotel Type
+
+Insight: This chart displays the total number of parking spaces requested by hotel type. If one hotel type shows a significantly higher count of requested parking spaces, it might indicate a greater reliance on personal vehicles or a larger number of guests with cars at that hotel.
+
+![Alt text](img13.png)
+
+### Chart 13 Code
+
+```r
+## = The Count of Parking Spaces Requested by Hotel Type = ##
+ggplot(df, aes(x = hotel, fill = hotel)) +
+  geom_bar() +
+  geom_text(stat = "count", aes(label = ..count..), vjust = -0.5, size = 3) +
+  labs(title = "Parking Spaces Requested by Hotel Type", x = "Hotel Type", y = "Count of Parking Spaces Requested") +
+  theme_minimal() +
+  scale_fill_manual(values = c("#0077b6", "#ff5a5f")) +
+  theme(plot.title = element_text(hjust = 0.5, size = 14, face = "bold"))
+```
+
+#### 14. Lead Time Distribution by Hotel Type
+
+Insight: This boxplot visualizes the distribution of lead times (the time between booking and check-in) by hotel type. Significant differences in lead time distributions can reveal booking behaviors specific to each hotel type, potentially guiding marketing strategies or operational adjustments.
+
+![Alt text](img15.png)
+
+### Chart 14 Code
+
+```r
+## = Lead Time Distribution by Hotel Type = ##
+ggplot(df, aes(x = hotel, y = lead_time, fill = hotel)) +
+  geom_boxplot() +
+  labs(title = "Lead Time Distribution by Hotel Type", x = "Hotel Type", y = "Lead Time (Days)") +
+  theme_minimal()+
+  theme(plot.title = element_text(hjust = 0.5, size = 14, face = "bold"))
+```
+
+#### 15. Cancellation Rate by Deposit Type
+
+Insight: This chart shows the proportion of cancellations relative to deposit types. If a higher cancellation rate is associated with a particular deposit type, it may suggest that guests are more likely to cancel if they have made a specific type of deposit. This insight can guide deposit policies to minimize cancellations.
+
+![Alt text](img14.png)
+
+### Chart 15 Code
+
+```r
+## = Cancellation Rate by Deposit Type = ##
+ggplot(df, aes(x = deposit_type, fill = factor(is_canceled))) +
+  geom_bar(position = "fill") +
+  geom_text(stat = "count", aes(label = scales::percent(..count../sum(..count..))), position = position_fill(vjust = 0.5), size = 3) +
+  labs(title = "Cancellation Rate by Deposit Type", x = "Deposit Type", y = "Proportion of Cancellations") +
+  theme_minimal() +
+  scale_fill_manual(values = c("#ff5a5f", "#0077b6"), labels = c("Not Canceled", "Canceled")) +
+  theme(plot.title = element_text(hjust = 0.5, size = 14, face = "bold"))
+```
+
+#### 16. Cancellation Rate by Market Segment
+
+Insight: The cancellation rate varies significantly by market segment. Segments such as online travel agencies (OTAs) might have a higher cancellation rate compared to other segments like corporate bookings. This indicates that OTA bookings may be more volatile, possibly due to more flexible cancellation policies offered by these platforms.
+
+![Alt text](img16.png)
+
+### Chart 16 Code
+
+```r
+## =cancellation rate by market segment = ##
+cancellation_rate <- df %>%
+  group_by(market_segment) %>%
+  summarize(cancellation_rate = mean(is_canceled))
+
+ggplot(cancellation_rate, aes(x = reorder(market_segment, -cancellation_rate), y = cancellation_rate)) +
+  geom_bar(stat = "identity", fill = "#0077b6", color = "black") +
+  geom_text(aes(label = scales::percent(cancellation_rate)), vjust = -0.3, size = 4) +
+  labs(title = "Cancellation Rate by Market Segment", x = "Market Segment", y = "Cancellation Rate") +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5, face = "bold", size = 14)) +
+  scale_y_continuous(labels = scales::percent)
+```
+
+<h2 style='color: #19a3e7'> Insights and Strategic Suggestions </h2>
+
+### Booking Patterns
+
+- **Insight**: The monthly booking trends indicate seasonal fluctuations in bookings.
+
+- **Recommendation**: Implement promotional offers or discounts during months with lower booking volumes to increase occupancy rates. Additionally, introduce special packages for off-peak seasons to maintain consistent booking levels.
+
+### Cancellation Mitigation
+
+- **Insight**: Certain market segments have higher cancellation rates, particularly as shown in the Cancellation Rate by Market Segment chart.
+
+- **Recommendation**: Reevaluate the cancellation policies for market segments with higher cancellation rates. Consider requiring deposits or offering incentives for confirmed bookings to reduce last-minute cancellations. Enhanced customer engagement could also help lower the cancellation rate.
+
+### Customer Targeting
+
+- **Insight**: The Average Daily Rate by Customer Type chart highlights which customer types generate the highest ADR.
+
+- **Recommendation**: Design targeted marketing campaigns to attract more customers from high-ADR segments. Consider offering loyalty programs or tailored experiences for repeat customers from these segments to further boost revenue.
+
+### Reservation Process Optimization
+
+- **Insight**: The Reservation Status by Month and Reservation Status by Hotel Type charts reveal variations in booking status, including cancellations and check-ins.
+
+- **Recommendation**: Streamline the reservation process by integrating automated systems that reduce room assignment errors. This could also help address the gap between booked and actual reservations, improving customer satisfaction.
+
+### Parking Space Management
+
+- **Insight**: Analysis of special requests, such as for parking spaces, suggests that certain requests are more common in specific periods.
+
+- **Recommendation**: Better allocate parking resources based on high-demand periods. This could involve reserving parking spots in advance or adjusting parking fees during high-occupancy months to optimize space utilization.
+
+---
+
+<h2 style='color: #19a3e7'> Conclusion </h2>
+
+In this report, we explored various aspects of hotel booking data using several visualizations. Our analysis revealed critical insights into customer booking behaviors, cancellation trends, and pricing strategies:
+
+- **Booking Trends:** We observed consistent fluctuations in bookings across different months, with certain months showing peak activity. The yearly trends indicated a growth in bookings, particularly in the high season.
+
+- **Customer Preferences:** Analysis of the average daily rate (ADR) by customer type revealed that certain customer segments tend to pay higher prices, possibly indicating a willingness to opt for premium services.
+
+- **Geographical Insights:** The ADR distribution across the top ten countries showed varying revenue contributions, with some countries significantly outperforming others in terms of ADR.
+
+- **Reservation Status:** The data highlighted notable differences in booking cancellations, particularly across different market segments, with some segments having a higher cancellation rate. Additionally, the reservation status per month revealed seasonal patterns affecting customer decisions.
+
+- **Hotel Preferences:** Different hotels exhibited varying performance in terms of reservation status, with certain hotel types attracting more confirmed bookings compared to others.
+
+These findings provide actionable insights that can aid in optimizing pricing strategies, enhancing customer experience, and reducing cancellation rates.
+
+<h2 style='color: #19a3e7'> Acknowledgements</h2>
+
+I would like to extend my heartfelt thanks to <a href="https://www.linkedin.com/in/soha-nagy-mostafa" style="color: #19a3e7; text-decoration: none; font-weight: bold;">Dr. Soha Nagy</a>. </b> for their invaluable support and guidance throughout this project. Your expertise and encouragement have been instrumental in achieving our goals, and I am deeply grateful for your mentorship.
+
+Thank you for your unwavering support and dedication.
+
+---
+
+<h1 style="text-align: center; color: #19a3e7">Thank You 💙</h1>
+
+<h2 style='text-align: center;'>
+    <b>Made By:</b>
+    <a href="https://www.linkedin.com/in/ahmed-nour-540382228" style="color: #19a3e7; text-decoration: none;">Ahmed Nour</a>
+</h2>
